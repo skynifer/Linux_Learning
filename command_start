@@ -1,0 +1,215 @@
+// serverfault.com //
+// linuxquestions.org/questions //
+
+   Ctrl+Alt+Т - запуск терминала 
+   Shift+Ctrl+C - копирование в терминал
+   Shift+Ctrl+V - вставка в терминал
+   
+   journalctl  - получение информации об ошибках из системы
+   journalctl | grep filename.php
+   find * | grep somethink
+   tree | more
+   uname -a -r -o -p -j
+   lsb_release -a
+ 
+   
+============= HISTORY ==================
+
+history -c
+history -d 1000
+history | grep zypper   
+Выполнить последнюю команду просто набрав "!!".
+Выполнить одну из предыдущих команд указав ее номер "!-2"
+Если нужная команда последняя содержала определенное слово, например, tmp, используем "!?tmp":
+Для отображения времени віполнения нужно экспортировать переменную HISTORYFORMAT вместе нужным форматом:
+-> export HISTTIMEFORMAT='%F %T ' 
+Для форматирования можно использовать такие модификаторы:
+
+%d – день;
+%m – месяц;
+%y – год;
+%T – штамп времени;
+%F - штамп даты.
+
+Указываем какие команды не стоит отображать, например, не будем выводить ls -l, pwd и date:
+
+ export HISTIGNORE='ls -l:pwd:date:'
+
+Также можно отключить вывод одинаковых команд:
+
+ export HISTCONTROL=ignoredups
+
+Существует два флага, ignoredups и ignorespace. Второй указывает, что нужно игнорировать команды, начинающиеся с пробела. Если вы хотите установить оба значения, используйте флаг ignoreboth. Используйте переменную HISTSIZE, чтобы установить размер истории:
+
+ export HISTSIZE=2000
+
+По умолчанию история сохраняется для каждого терминала отдельно. Но если вы хотите чтобы все ваши команды немедленно синхронизировались между всеми терминалами, то это очень просто настроить. Добавьте такую переменную:
+
+ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r;"
+
+Для тестирования работы вы можете набирать эти команды прямо в терминале и сразу видеть результат, но для сохранения добавьте нужные строки в ваш ~/.bashrc. Например:
+
+ vi ~/.bashrc
+
+ export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r;"
+$ export HISTCONTROL=ignoredups
+$ export HISTTIMEFORMAT='%F %T '
+
+
+
+   
+   
+------- Network Configuration -------------------------------
+
+  apt install net-tools
+  
+  
+ip link
+ip addr
+ifconfig
+route
+cat /etc/hosts
+grep 127.0.0.1 /etc/hosts
+ping
+ping -c4 localhost
+cat /etc/resolv.conf - DNS
+dig localhost.localdomain  - used to resolve other fully-qualified domain names
+dig -x 192.168.1.2
+
+cd /etc/network
+
+
+---- NETSTAT------
+
+- the -t option to the netstat command limits the listing to TCP ports; 
+- the -l option limits the output to ports with listening services; 
+- the -n shows the network addresses numerically:
+
+netstat --help
+netstat -tl
+netstat -tln
+cat /etc/services
+
+============= BRIDGE ================
+
+cd /urs/src/
+/usr/src# apt-get install linux-source ncurses-dev
+tar xpJf linux-source-5.4.tar.xz
+cd linux-source-5.4
+make menuconfig
+make deb-dpk
+!
+Apt-get update && apt-get install build-essential automakepkg-config git
+!
+git clone git://git.kernel.org/pub/scm/linux/kernel/git/shemminger/bridge-utils.git
+cd bridge-utils/
+autoconf
+./configure.ac && make && make install-sh
+brctl --version
+brctl
+
+
+--------------------------------------------------------------
+
+
+------------ ARCHIVE -----------
+
+чтобы не заботится о том, какой тип архива, можно поставить утилиту atool:
+$ sudo apt-get install atool 
+Для архивации:
+apack a.7z file1.txt file2 dir1
+Для просмотра содержимого:
+$ als a.7z
+sudo apt-get install xz-utils
+tar -xpJf archive.tar.xz
+
+============== Permissions ================
+
+The man page of chmod covers that.
+
+u stands for user.
+g stands for group.
+o stands for others.
+a stands for all.
+
+--> chmod u+x somefile will grant only the owner of that file execution permissions;
+--> chmod +x somefile is the same as chmod a+x somefile
+
+
+==============================================
+ls - -l -h -R - перечисляет содержимое каталога и выводит полные сведенья
+pwd - 
+cd - возвращает вас в ваш домашний каталог.
+cp file1 newdir - копирует файл с именем file1 в каталог с именем newdir
+mvfile? /some/other/directory - перемещает в указанное место все файлы, со­-
+                                держащие в имени буквы/ilе и еще один символ.
+rm -r* - удаляет все файлы и каталоги в текущем местоположении. Использовать
+         с большой осторожностью!                             
+
+cat - 
+less - 
+touch - 
+stat - 
+mkdir - 
+rmdir - [rm -r]
+
+Следующим шагом создайте несколько файлов и новый каталог:
+$ touch filel file2
+$ mkdir newdir
+!
+!
+!
+Чтобы переместить только файлы с именами, частично совпадающими с указан­ ной последовательностью,
+mv file* /some/other/direetory
+!
+удаление файлов
+rm file1
+rm file*
+rm -r*
+!
+!
+Какое количество байтов занимает файл на диске,
+/sys/Ьlock/sda/size
+
+
+---------- Работа с VirtualBox
+
+# apt update 
+# apt install virtualbox
+# sudo apt install virtualbox-guest-additions-iso
+# vboxmanage list vms
+$ shasum ubuntu-16.04.2-server-amd64.iso
+$ vboxmanage clonevm --register Kali-Linux-template --name newkali
+$ vboxmanage export website-project -о website.ova
+$ scp website.ova username@192.168.0.34:/home/username
+$ vboxmanage import website.ova
+
+
+Example: 
+
+  $ cd /home/<username>/Downloads
+  # dpkg -i skypeforl~nux-64.debe
+  
+-----> АРТ-системы позволяют напрямую искать доступные пакеты 'apt search'
+
+$ apt search sensorss
+$ apt show lm-sensors
+
+
+------------------- Работа с  Linux Container (LXC) -----------------
+
+
+# apt update
+# apt install lxc
+# lxc-create -n myContainer -t ubuntu
+$ ls /usr/share/lxc/templates/
+$ passwd 
+$ lxc-ls - -fancy
+# lxc-start -d -n myContainer
+# lxc-attach -n myContainer
+lxc-stop -n container_name -k
+lxc-destroy -n container_name
+lxc-destroy -n container_name -s
+
+
+/sys/fs/cgroup
