@@ -1,0 +1,13 @@
+# https://docs.opendaylight.org/en/latest/downloads.html
+
+apt-get install default-jre-headless
+export JAVA_HOME=/usr/lib/jvm/default-java
+apt-get install wget
+wget https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/distribution-karaf/0.5.2-Boron-SR2/
+apt-get install unzip
+unzip
+file ./bin/karaft
+http://192.168.122.153:8181
+!
+ovs-ofctl -0 OpenFlow13 dump-flows br0
+
