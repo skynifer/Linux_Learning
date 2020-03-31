@@ -1,0 +1,2 @@
+ovs-ofctl -0 openFlow13 dump-ports br0
+ovs-vsctl show
