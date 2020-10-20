@@ -9,8 +9,7 @@ $ sudo passwd john
 $ grep john /etc/passwd
 john:x:1001:1001::/home/alice:/bin/sh
 
-$ grep john /etc/passwd
-john:x:0:0::/home/john:/bin/sh
+sudo mkhomedir_helper ansible
 
 $ sudo usermod -a -G root john
 
